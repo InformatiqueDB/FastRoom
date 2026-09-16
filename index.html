@@ -3,99 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FastRoom — Réservation instantanée</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <title>FastRoom - DB Cargo France</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header class="header">
-  <!-- Bandeau supérieur noir -->
-  <div class="header__board">
-    <div class="header__board-inner">
-      <div class="clock" id="liveClock" aria-live="polite">
-        <span class="clock__time">
-          <span id="clockH">--</span><span class="clock__colon">:</span><span id="clockM">--</span><span class="clock__colon">:</span><span id="clockS">--</span>
-        </span>
-      </div>
-      <div class="board-caption">DB Cargo France · Réservation express</div>
-      <div class="date" id="liveDate" aria-live="polite">
-        <span class="date__text" id="dateValue">--/--/----</span>
-      </div>
-    </div>
+  <!-- Barre supérieure : Horloge, titre discret, date -->
+  <div class="top-bar">
+    <div id="live-time" class="bar-left">--:--:--</div>
+    <div class="bar-center">DB Cargo France &bull; Réservation express</div>
+    <div id="live-date" class="bar-right">--/--/----</div>
   </div>
 
-  <!-- Section principale rouge -->
-  <div class="header__inner">
-    <div class="header__logo">
-      <img src="DBCargo.png" alt="Logo DB Cargo">
+  <!-- En-tête principal avec Logo, Titre et Notice bien visible -->
+  <header class="main-header">
+    <div class="header-left">
+      <img src="DBCargo.png" alt="DB Cargo" class="logo-db" />
     </div>
-
-    <!-- Le titre est maintenant centré, et l'espace à droite est libre -->
-    <div class="brand">
-      <h1 class="brand__name">FastRoom<span class="brand__dot">.</span></h1>
-      <p class="brand__sub"><br>Sur place uniquement :</br> Vérifiez la tablette devant la salle et réservez pour maintenant. (Pas de réservation à l'avance).</p>
-    </div>
-  </div>
-</header>
-
-<!-- Barre d'onglets façon navigateur -->
-<nav class="main-nav">
-  <div class="main-nav__inner">
-    <a href="#" class="main-nav__tab main-nav__tab--active">Réservation Express (À l'instant T)</a>
-    <a href="https://krbs.intranet.deutschebahn.com/roomtool/booking/searchRoomExecute.do" class="main-nav__tab" target="_blank" rel="noopener noreferrer">Planification avancée (KRBS) ↗</a>
-  </div>
-</nav>
-
-<main class="main-content">
-  
-  <!-- NOUVEAU : Barre d'outils avec compteur, étages et filtre regroupés -->
-  <div class="toolbar">
-    <div class="result-count" id="resultCount" aria-live="polite"></div>
     
-    <div class="toolbar__controls">
-      <!-- Choix de l'étage déplacé ici -->
-      <div class="floor-tabs" role="tablist" aria-label="Étage">
-        <button class="floor-tab floor-tab--active" id="tab-3" role="tab" aria-selected="true">3ème étage</button>
-        <button class="floor-tab" id="tab-RDC" role="tab" aria-selected="false">RDC</button>
+    <div class="header-center">
+      <h1 class="main-title">FastRoom.</h1>
+      
+      <!-- Encart informatif agrandi et mis en valeur -->
+      <div class="header-notice">
+        <span class="notice-badge">Sur place uniquement</span>
+        <p class="notice-text">
+          Vérifiez la tablette devant la salle et réservez pour maintenant. 
+          <strong>(Pas de réservation à l'avance)</strong>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Espace d'équilibrage à droite pour centrer parfaitement le titre -->
+    <div class="header-right"></div>
+  </header>
+
+  <!-- Onglets de navigation -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" type="button">
+      Réservation Express (À l'instant T)
+    </button>
+    <a href="#" class="tab-btn external-link" target="_blank" rel="noopener noreferrer">
+      Planification avancée (KRBS) &#x2197;
+    </a>
+  </nav>
+
+  <!-- Barre de filtres : compteur, sélecteur d'étage, slider de capacité -->
+  <div class="toolbar">
+    <div class="room-count"><span id="count-value">8</span> salles</div>
+
+    <div class="filter-controls">
+      <!-- Filtres d'étages -->
+      <div class="floor-selector">
+        <button class="floor-btn active" data-floor="3">3ème étage</button>
+        <button class="floor-btn" data-floor="0">RDC</button>
       </div>
 
       <!-- Filtre de capacité -->
       <div class="capacity-filter">
-        <label for="capacity-slider" class="capacity-label">Capacité min.</label>
-        <input type="range" id="capacity-slider" min="0" max="40" step="1" value="0">
-        <input type="text" id="capacity-input" value="Toutes" title="Entrez le nombre de participants" inputmode="numeric">
+        <label for="capacity-range">Capacité min.</label>
+        <input type="range" id="capacity-range" min="1" max="15" value="1" />
+        <button id="reset-capacity-btn" class="btn-all-caps">Toutes</button>
       </div>
     </div>
   </div>
 
-  <!-- Wrapper pour inclure les flèches de défilement rapide -->
-  <div class="grid-wrapper">
-    <button class="scroll-arrow scroll-left" id="scrollLeftBtn" aria-label="Défiler à gauche">❮</button>
-    <button class="scroll-arrow scroll-right" id="scrollRightBtn" aria-label="Défiler à droite">❯</button>
+  <!-- Grille des salles -->
+  <main class="rooms-container" id="rooms-grid">
+    <!-- Rempli dynamiquement par app.js -->
+  </main>
 
-    <!-- Grille 3ème étage (Affichée par défaut) -->
-    <div id="grid-3" class="grid-container active">
-      <div class="empty-state" id="empty-3">
-        <p>Aucune salle avec cette capacité à cet étage.</p>
-        <button type="button" class="empty-state__reset" data-reset-filter>Réinitialiser le filtre</button>
-      </div>
-    </div>
-
-    <!-- Grille RDC (Cachée par défaut) -->
-    <div id="grid-RDC" class="grid-container">
-      <div class="empty-state" id="empty-RDC">
-        <p>Aucune salle avec cette capacité à cet étage.</p>
-        <button type="button" class="empty-state__reset" data-reset-filter>Réinitialiser le filtre</button>
-      </div>
-    </div>
-  </div>
-</main>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
