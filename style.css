@@ -1,255 +1,329 @@
-/* =========================================================
-   FastRoom — Design System
-   ========================================================= */
 :root {
-  /* Couleurs DB Cargo */
-  --db-red: rgb(197, 0, 20);
-  --db-red-hover: rgb(225, 20, 40); 
-  --db-red-dark: rgb(160, 0, 15);
-
-  /* Palette de gris premium (contenu) */
-  --ink: #101010;
-  --slate: #5b5e63;
-  --slate-soft: #90939a;
-  --paper: #f4f5f6;
-  --card: #ffffff;
-  --line: #e9ecef;
-
-  /* Éclairage et ombres */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-  --red-glow: 0 0 15px rgba(197, 0, 20, 0.25);
-
-  /* Typographie */
-  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-
-  /* Courbures */
-  --radius-md: 12px;
-  --radius-sm: 8px;
-  --radius-lg: 18px;
-
-  /* Transitions */
-  --ease-premium: cubic-bezier(0.23, 1, 0.32, 1);
-  --trans-slow: all 0.4s var(--ease-premium);
-  --trans-fast: all 0.2s var(--ease-premium);
+  --db-red: #d40000;
+  --db-red-dark: #b00000;
+  --db-gray-dark: #111111;
+  --bg-page: #e9ecef;
+  --card-bg: #ffffff;
+  --border-color: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-muted: #6b7280;
+  --pill-bg: #f3f4f6;
+  --pill-hover: #e5e7eb;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* =========================================================
-   Reset & Base
-   ========================================================= */
-* { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--font-display); overflow-x: hidden; letter-spacing: -0.01em; }
-:focus-visible { outline: 2px solid var(--db-red); outline-offset: 2px; border-radius: 4px; }
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--paper); }
-::-webkit-scrollbar-thumb { background: #dcdcdc; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #bfbfbf; }
-
-/* =========================================================
-   Header — Panneau d'affichage des départs
-   ========================================================= */
-.header {
-  background: rgb(197, 0, 20); 
-  color: #fff;
-  position: relative;
-  z-index: 10;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.header__board { background: #111111; border-bottom: 1px solid #000000; }
-.header__board-inner { max-width: 1600px; margin: 0 auto; padding: 6px 24px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-.clock { justify-self: start; font-family: var(--font-mono); color: #d68b20; }
-.clock__time { font-size: 14px; font-weight: 500; letter-spacing: 0.05em; }
-.clock__colon { opacity: 0.8; }
-
-.board-caption { justify-self: center; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: #b3b3b3; }
-
-.date { justify-self: end; font-family: var(--font-mono); color: #d68b20; }
-.date__text { font-size: 14px; font-weight: 500; letter-spacing: 0.05em; }
-
-/* Section principale du header */
-.header__inner {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 8px 24px 10px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+/* 1. Top Bar noire */
+.top-bar {
+  background-color: var(--db-gray-dark);
+  color: #ff9900;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95rem;
+  font-weight: bold;
+  padding: 6px 24px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.header__logo { justify-self: start; background: transparent; display: flex; align-items: center; }
-.header__logo img { height: 32px; width: auto; display: block; }
+.bar-center {
+  color: #d1d5db;
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
 
-.brand { justify-self: center; text-align: center; display: flex; flex-direction: column; gap: 2px; }
-.brand__name { font-size: 32px; font-weight: 800; margin: 0; letter-spacing: -0.02em; }
-.brand__dot { color: #ffffff; opacity: 0.8; } 
-.brand__sub { margin: 0; font-size: 13px; font-weight: 400; color: rgba(255, 255, 255, 0.9); }
+/* 2. Header principal rouge */
+.main-header {
+  background-color: var(--db-red);
+  color: #ffffff;
+  padding: 16px 28px;
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
 
-/* =========================================================
-   Onglets Principaux (Style Navigateur web)
-   ========================================================= */
-.main-nav { background: #e5e7eb; border-bottom: 1px solid #d1d5db; }
-.main-nav__inner { max-width: 1600px; margin: 0 auto; padding: 12px 32px 0; display: flex; gap: 6px; }
+.header-left {
+  display: flex;
+  align-items: center;
+}
 
-.main-nav__tab {
+.logo-db {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.main-title {
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+/* --- Bloc informatif mis en évidence --- */
+.header-notice {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  padding: 8px 18px;
+  max-width: 720px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.notice-badge {
+  background-color: #ffffff;
+  color: var(--db-red);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.notice-text {
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.notice-text strong {
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* 3. Onglets de navigation */
+.nav-tabs {
+  background-color: #ffffff;
+  display: flex;
+  padding: 0 24px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--slate);
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid transparent;
-  border-radius: 8px 8px 0 0;
-  transition: var(--trans-fast);
-  margin-bottom: -1px;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
 }
 
-.main-nav__tab:hover:not(.main-nav__tab--active) { background: rgba(255, 255, 255, 0.7); color: var(--ink); }
-.main-nav__tab--active { background: var(--paper); color: var(--db-red); border-color: #d1d5db; border-bottom-color: var(--paper); }
+.tab-btn.active {
+  color: var(--db-red);
+  border-bottom: 3px solid var(--db-red);
+  background-color: #f9fafb;
+}
 
-/* =========================================================
-   Barre d'outils (Compteur + Filtres Regroupés)
-   ========================================================= */
+.tab-btn:hover:not(.active) {
+  color: var(--text-primary);
+  background-color: #f3f4f6;
+}
+
+/* 4. Barre d'outils et filtres */
 .toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 16px;
+  padding: 16px 28px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.result-count { font-size: 14px; font-weight: 600; color: var(--slate-soft); letter-spacing: 0.01em; }
+.room-count {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #4b5563;
+}
 
-.toolbar__controls {
+.filter-controls {
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
 }
 
-/* NOUVEAU LOOK : Sélecteur d'étage adapté au fond clair */
-.floor-tabs { 
-  display: flex; 
-  background: var(--card); 
-  border: 1px solid var(--line); 
-  border-radius: 999px; /* Forme de pilule pour correspondre au filtre */
-  box-shadow: var(--shadow-sm); 
-  overflow: hidden; 
-  padding: 0; 
+.floor-selector {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.floor-tab { 
-  background: transparent; 
-  border: none; 
-  color: var(--slate); 
-  font-size: 14px; 
-  font-weight: 500; 
-  padding: 10px 20px; 
-  cursor: pointer; 
-  transition: var(--trans-fast); 
+.floor-btn {
+  border: none;
+  background: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.floor-tab:not(:last-child) { border-right: 1px solid var(--line); }
-.floor-tab:hover:not(.floor-tab--active) { background: #f8f9fa; color: var(--ink); }
-.floor-tab--active { background: var(--db-red); color: #ffffff; font-weight: 600; }
+.floor-btn.active {
+  background-color: var(--db-red);
+  color: #ffffff;
+}
 
-/* Filtre de capacité */
-.capacity-filter { display: flex; align-items: center; gap: 12px; background: var(--card); padding: 10px 20px; border-radius: 999px; box-shadow: var(--shadow-sm); border: 1px solid var(--line); color: var(--ink); }
-.capacity-label { font-size: 14px; font-weight: 500; color: var(--slate); }
+.capacity-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 30px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4b5563;
+}
 
-#capacity-slider { -webkit-appearance: none; appearance: none; width: 140px; background: transparent; outline: none; cursor: pointer; }
-#capacity-slider::-webkit-slider-runnable-track { width: 100%; height: 8px; background: linear-gradient(to right, var(--db-red) var(--slider-progress, 0%), #e9ecef var(--slider-progress, 0%)); border-radius: 999px; border: 1px solid #ced4da; }
-#capacity-slider::-moz-range-track { width: 100%; height: 8px; background: #e9ecef; border-radius: 999px; border: 1px solid #ced4da; }
-#capacity-slider::-moz-range-progress { height: 8px; background: var(--db-red); border-radius: 999px; }
-#capacity-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--db-red); margin-top: -5px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); transition: transform 0.15s var(--ease-premium); }
-#capacity-slider::-moz-range-thumb { height: 16px; width: 16px; border: none; border-radius: 50%; background: var(--db-red); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
-#capacity-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+.capacity-filter input[type="range"] {
+  accent-color: var(--db-red);
+  cursor: pointer;
+}
 
-#capacity-input { font-family: var(--font-mono); font-weight: 600; font-size: 13px; color: var(--ink); min-width: 70px; max-width: 70px; background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 6px; text-align: center; padding: 6px 8px; outline: none; cursor: text; transition: var(--trans-fast); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); }
-#capacity-input:hover { background: #ffffff; border-color: #adb5bd; }
-#capacity-input:focus { background: #fff; border-color: var(--db-red); box-shadow: 0 0 0 3px rgba(197, 0, 20, 0.15); }
+.btn-all-caps {
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #374151;
+  transition: background-color 0.2s;
+}
 
-/* =========================================================
-   Contenu principal & Grilles
-   ========================================================= */
-.main-content { max-width: 1600px; margin: 0 auto; padding: 20px 32px 32px; }
+.btn-all-caps:hover {
+  background-color: #e5e7eb;
+}
 
-.grid-wrapper { position: relative; width: 100%; }
+/* 5. Grille des salles */
+.rooms-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 10px 28px 30px 28px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
 
-.scroll-arrow { position: absolute; top: 45%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-lg); color: var(--db-red); font-size: 18px; font-weight: bold; cursor: pointer; z-index: 20; display: none; align-items: center; justify-content: center; transition: var(--trans-fast); }
-.scroll-arrow:hover { background: var(--db-red); color: #fff; border-color: var(--db-red); }
-.scroll-left { left: -22px; }
-.scroll-right { right: -22px; }
+/* Carte de salle */
+.room-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-.grid-container { display: none; gap: 18px; overflow-x: auto; padding: 4px 4px 30px; }
-.grid-container.active { display: flex; animation: fadeInSlideUp 0.5s var(--ease-premium) forwards; }
+.room-header {
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 8px;
+}
 
-.empty-state { display: none; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; padding: 40px 28px; background: var(--card); border: 1px dashed var(--line); border-radius: var(--radius-lg); color: var(--slate); }
-.empty-state.is-visible { display: flex; }
-.empty-state p { margin: 0; font-size: 15px; font-weight: 600; color: var(--ink); }
-.empty-state__reset { font-family: inherit; font-size: 13px; font-weight: 700; color: var(--db-red); background: rgba(197, 0, 20, 0.08); border: 1px solid rgba(197, 0, 20, 0.15); padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: var(--trans-fast); }
-.empty-state__reset:hover { background: var(--db-red); color: #fff; border-color: var(--db-red); }
+.room-trigram {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
 
-/* =========================================================
-   Carte de salle & Boutons
-   ========================================================= */
-.room-column { flex: 1; min-width: 172px; background: var(--card); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; transition: var(--trans-slow); border: 1px solid rgba(233, 236, 239, 0.6); }
-.room-column:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(197, 0, 20, 0.12); }
-.room-header { background: #fff; padding: 16px 16px 14px; border-bottom: 3px solid var(--line); transition: var(--trans-slow); }
-.room-column:hover .room-header { border-bottom-color: var(--db-red); }
-.room-code { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--board-ink); background: var(--amber-faint); border: 1px solid var(--amber-dim); padding: 2px 7px; border-radius: 5px; margin-bottom: 8px; }
-.room-name { font-weight: 800; font-size: 15.5px; letter-spacing: -0.02em; color: var(--ink); line-height: 1.25; }
-.room-meta { margin-top: 6px; font-size: 12px; font-weight: 500; color: var(--slate-soft); }
-.room-actions { display: flex; flex-direction: column; padding: 14px 16px 16px; gap: 9px; }
+.room-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 2px 0;
+}
 
-.duration-btn { background: var(--paper); border: 1px solid #e2e1dd; color: var(--slate); padding: 15px 12px; border-radius: var(--radius-sm); font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer; position: relative; overflow: hidden; transition: var(--trans-fast); }
-.duration-btn:hover:not(:disabled) { background: var(--db-red); color: #fff; border-color: var(--db-red); box-shadow: var(--red-glow); transform: translateY(-2px) scale(1.03); }
-.duration-btn:active:not(:disabled) { transform: translateY(1px) scale(0.98); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
-.duration-btn.is-booking { background: var(--db-red); color: #fff; border-color: var(--db-red); pointer-events: none; }
-.duration-btn:disabled { opacity: 0.3; cursor: not-allowed; background: #e0e0e0; border-color: #d0d0d0; }
-.room-column:hover .duration-btn { border-color: rgba(197, 0, 20, 0.15); }
+.room-capacity {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
 
-/* =========================================================
-   Toast de confirmation
-   ========================================================= */
-.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: #111111; color: #d68b20; font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; padding: 12px 22px; border-radius: 999px; border: 1px solid #000; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: var(--trans-fast); z-index: 50; }
-.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+/* Boutons de réservation rapide (durées) */
+.durations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-/* =========================================================
-   Animations
-   ========================================================= */
-@keyframes fadeInSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
+.duration-btn {
+  background-color: var(--pill-bg);
+  border: 1px solid #e5e7eb;
+  color: #1f2937;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
 
-/* =========================================================
-   Responsive
-   ========================================================= */
-@media (max-width: 640px) {
-  .header__board-inner { grid-template-columns: 1fr; gap: 10px; text-align: center; }
-  .clock, .date { justify-self: center; }
-  
-  .header__inner { grid-template-columns: 1fr; gap: 16px; padding: 16px 20px 20px; }
-  .header__logo { justify-self: center; }
-  .brand__name { font-size: 24px; }
-  
-  .main-nav__inner { padding: 12px 16px 0; overflow-x: auto; white-space: nowrap; }
+.duration-btn:hover {
+  background-color: var(--pill-hover);
+  border-color: #d1d5db;
+}
 
-  .toolbar { flex-direction: column; align-items: stretch; gap: 16px; margin-bottom: 20px; }
-  .toolbar__controls { flex-direction: column; align-items: stretch; gap: 12px; }
-  .floor-tabs { display: flex; width: 100%; }
-  .floor-tab { flex: 1; text-align: center; }
-  .capacity-filter { justify-content: center; }
-  
-  .result-count { text-align: center; }
-
-  .main-content { padding: 12px 16px; }
-  .room-column { min-width: 148px; }
-  
-  .scroll-left { left: 5px; }
-  .scroll-right { right: 5px; }
+/* Responsive pour écrans plus compacts */
+@media (max-width: 900px) {
+  .main-header {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    text-align: center;
+  }
+  .header-left, .header-right {
+    display: none;
+  }
+  .toolbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
 }
